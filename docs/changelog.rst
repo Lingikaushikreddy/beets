@@ -53,6 +53,10 @@ Bug fixes
   artwork from the iTunes Store instead of deprecated ``100000x100000-999``,
   fixing an issue where Apple's CDN rejected image requests with HTTP 400 Bad
   Request.
+- :doc:`plugins/bpd`: Report song paths with ``/`` separators on every platform,
+  so that the paths clients receive can be used to address songs on Windows too.
+- :ref:`import-cmd`: Detect the format of extension-less files on Windows, where
+  the ``ffprobe`` output was left unparsed because of its line endings.
 
 ..
     For plugin developers
