@@ -1,8 +1,6 @@
 """Tests for the play plugin"""
 
 import os
-import sys
-import unittest
 from unittest.mock import ANY, patch
 
 import pytest
@@ -74,8 +72,6 @@ class PlayPluginTest(IOMixin, PlayPluginMixin, BeetsTestCase):
 
         self.run_and_assert(open_mock, ["title:aNiceTitle"], "echo other")
 
-    # FIXME: fails on windows
-    @unittest.skipIf(sys.platform == "win32", "win32")
     def test_relative_to(self, open_mock):
         self.config["play"]["command"] = "echo"
         self.config["play"]["relative_to"] = "/something"

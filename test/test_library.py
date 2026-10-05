@@ -7,7 +7,6 @@ import os.path
 import re
 import shutil
 import stat
-import unittest
 from pathlib import Path
 from unittest.mock import patch
 
@@ -495,7 +494,6 @@ class TestDestination(PytestItemHelper):
         item_in_db.title = "three"
         assert item_in_db.destination() == np("base/three")
 
-    @unittest.skip("unimplemented: #359")
     def test_destination_with_empty_component(self, item_in_db):
         self.lib.directory = b"base"
         self.lib.replacements = [(re.compile(r"^$"), "_")]
@@ -506,7 +504,6 @@ class TestDestination(PytestItemHelper):
         item_in_db.album = "one"
         assert item_in_db.destination() == np("base/one/_/three")
 
-    @unittest.skip("unimplemented: #359")
     def test_destination_with_empty_final_component(self, item_in_db):
         self.lib.directory = b"base"
         self.lib.replacements = [(re.compile(r"^$"), "_")]

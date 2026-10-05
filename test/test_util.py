@@ -4,7 +4,6 @@ import os
 import platform
 import re
 import subprocess
-import sys
 import unittest
 from pathlib import Path
 from unittest.mock import Mock, patch
@@ -82,7 +81,6 @@ class UtilTest(unittest.TestCase):
             p = util.sanitize_path("foo/bar", [(re.compile(r"foo"), "bar")])
         assert p == "bar/bar"
 
-    @unittest.skip("unimplemented: #359")
     def test_sanitize_empty_component(self):
         with _common.platform_posix():
             p = util.sanitize_path("foo//bar", [(re.compile(r"^$"), "_")])
@@ -106,13 +104,11 @@ class UtilTest(unittest.TestCase):
 
         assert util.case_sensitive(path) == (platform.system() != "Windows")
 
-    @unittest.skipIf(sys.platform == "win32", "fs is not case sensitive")
     def test_case_sensitive_detects_sensitive(self):
         # FIXME: Add tests for more code paths of case_sensitive()
         # when the filesystem on the test runner is not case sensitive
         pass
 
-    @unittest.skipIf(sys.platform != "win32", "fs is case sensitive")
     def test_case_sensitive_detects_insensitive(self):
         # FIXME: Add tests for more code paths of case_sensitive()
         # when the filesystem on the test runner is case sensitive

@@ -2,7 +2,6 @@
 
 import os
 import platform
-import sys
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -178,37 +177,39 @@ class ConfigTest(IOMixin, TestPluginTestCase):
         self.run_command("--config", str(self.cli_config_path), "test")
         assert config["anoption"].get() == "cli overwrite"
 
-    #    @unittest.skip('Difficult to implement with optparse')
-    #    def test_multiple_cli_config_files(self):
-    #        cli_config_path_1 = self.temp_path / 'config.yaml'
-    #        cli_config_path_2 = self.temp_path / 'config_2.yaml'
-    #
-    #        with open(cli_config_path_1, 'w') as file:
-    #            file.write('first: value')
-    #
-    #        with open(cli_config_path_2, 'w') as file:
-    #            file.write('second: value')
-    #
-    #        self.run_command('--config', cli_config_path_1,
-    #                      '--config', cli_config_path_2, 'test')
-    #        assert config['first'].get() == 'value'
-    #        assert config['second'].get() == 'value'
-    #
-    #    @unittest.skip('Difficult to implement with optparse')
-    #    def test_multiple_cli_config_overwrite(self):
-    #        cli_overwrite_config_path = self.temp_path / 'overwrite_config.yaml'
-    #
-    #        self.cli_config_path.write_text("anoption: value")
-    #
-    #        with open(cli_overwrite_config_path, 'w') as file:
-    #            file.write('anoption: overwrite')
-    #
-    #        self.run_command('--config', str(self.cli_config_path),
-    #                      '--config', cli_overwrite_config_path, 'test')
-    #        assert config['anoption'].get() == 'cli overwrite'
+    def test_multiple_cli_config_files(self):
+        cli_config_path_1 = self.temp_path / "config.yaml"
+        cli_config_path_2 = self.temp_path / "config_2.yaml"
 
-    # FIXME: fails on windows
-    @unittest.skipIf(sys.platform == "win32", "win32")
+        with open(cli_config_path_1, "w") as file:
+            file.write("first: value")
+
+        with open(cli_config_path_2, "w") as file:
+            file.write("second: value")
+
+        self.run_command(
+            "--config", cli_config_path_1, "--config", cli_config_path_2, "test"
+        )
+        assert config["first"].get() == "value"
+        assert config["second"].get() == "value"
+
+    def test_multiple_cli_config_overwrite(self):
+        cli_overwrite_config_path = self.temp_path / "overwrite_config.yaml"
+
+        self.cli_config_path.write_text("anoption: value")
+
+        with open(cli_overwrite_config_path, "w") as file:
+            file.write("anoption: overwrite")
+
+        self.run_command(
+            "--config",
+            str(self.cli_config_path),
+            "--config",
+            cli_overwrite_config_path,
+            "test",
+        )
+        assert config["anoption"].get() == "cli overwrite"
+
     def test_cli_config_paths_resolve_relative_to_user_dir(self):
         self.cli_config_path.write_text("library: beets.db\nstatefile: state")
 
