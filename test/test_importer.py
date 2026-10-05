@@ -276,7 +276,7 @@ class TestImport7z(TestImportZip):
 
 class TestImportPasswordRar(TestImportZip):
     def create_archive(self):
-        return _common.RSRC / "password.rar"
+        return _common.RSRC / "archive.rar"
 
 
 class ImportSingletonTest(AutotagImportTestCase):

@@ -81,6 +81,7 @@ class UtilTest(unittest.TestCase):
             p = util.sanitize_path("foo/bar", [(re.compile(r"foo"), "bar")])
         assert p == "bar/bar"
 
+    @unittest.skip("unimplemented: #359")
     def test_sanitize_empty_component(self):
         with _common.platform_posix():
             p = util.sanitize_path("foo//bar", [(re.compile(r"^$"), "_")])

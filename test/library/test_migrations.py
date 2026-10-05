@@ -323,6 +323,10 @@ class TestMigrationBackup(MigrationTestHelper):
     migration = (migrations.LyricsMetadataInFlexFieldsMigration, (Item,))
     db_on_disk = True
 
+    @pytest.fixture
+    def disable_migration_backup(self):
+        """Override the global fixture which disables migration backup."""
+
     @classmethod
     def setup_previous_state(cls, monkeypatch):
         monkeypatch.setattr(

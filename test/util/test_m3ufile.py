@@ -1,5 +1,6 @@
 """Testsuite for the M3UFile class."""
 
+import sys
 from pathlib import Path
 
 import pytest
@@ -46,6 +47,7 @@ class TestM3UFile(PathsMixin):
         m3ufile.write()
         assert the_playlist_file.exists()
 
+    @pytest.mark.skipif(sys.platform != "win32", reason="Windows-style paths")
     def test_playlist_write_and_read_unicode_windows(self):
         """Test saving unicode paths to a playlist file on Windows."""
         the_playlist_file = (
@@ -71,6 +73,7 @@ class TestM3UFile(PathsMixin):
             Path("x:\\") / "This" / "is" / "another" / "path" / "tö_a_file.mp3"
         )
 
+    @pytest.mark.skipif(sys.platform == "win32", reason="Unix-style paths")
     def test_playlist_load_ascii(self):
         """Test loading ascii paths from a playlist file."""
         the_playlist_file = RSRC / "playlist.m3u"
@@ -80,6 +83,7 @@ class TestM3UFile(PathsMixin):
             "/This/is/a/path/to_a_file.mp3"
         )
 
+    @pytest.mark.skipif(sys.platform == "win32", reason="Windows-style paths")
     def test_playlist_load_unicode(self):
         """Test loading unicode paths from a playlist file."""
         the_playlist_file = RSRC / "playlist.m3u8"
@@ -89,6 +93,7 @@ class TestM3UFile(PathsMixin):
             "/This/is/å/path/to_a_file.mp3"
         )
 
+    @pytest.mark.skipif(sys.platform != "win32", reason="Unix-style paths")
     def test_playlist_load_unicode_windows(self):
         """Test loading unicode paths from a playlist file."""
         the_playlist_file = RSRC / "playlist_windows.m3u8"

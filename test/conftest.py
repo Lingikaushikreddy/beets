@@ -192,6 +192,16 @@ def clear_cached_classproperty():
 
 
 @pytest.fixture(autouse=True)
+def disable_migration_backup():
+    with pytest.MonkeyPatch.context() as patch:
+        patch.setattr(
+            "beets.dbcore.db.Migration._before_migration_backup",
+            lambda *_: None,
+        )
+        yield
+
+
+@pytest.fixture(autouse=True)
 def unload_plugins() -> Iterator[None]:
     """Unload plugins at the end of each test."""
     yield
