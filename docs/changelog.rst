@@ -60,6 +60,13 @@ Bug fixes
 - Detect ImageMagick on Windows: the version probe kept looking for ``convert``
   after ``magick`` had answered and picked up the unrelated built-in Windows
   tool of that name, reporting the backend as unavailable. :bug:`5414`
+- :doc:`plugins/hook`: Keep backslashes intact when splitting hook commands on
+  Windows, where they separate path components rather than escape the next
+  character, so that commands taking an absolute path now receive it in one
+  piece.
+- :doc:`plugins/play`: Keep a path absolute instead of crashing when
+  ``relative_to`` points at another Windows drive, where no relative path
+  between the two exists, and warn about the paths that were left alone.
 
 ..
     For plugin developers
